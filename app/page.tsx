@@ -22,26 +22,31 @@ const item = {
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FCFCFD]">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass bg-white/50 backdrop-blur-xl border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
-              <Activity className="text-white w-6 h-6" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">MediTrack</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Features</a>
-            <Link href="/login" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Sign in</Link>
-            <Link href="/register" className="btn-primary py-2.5 px-5 text-sm">Get Started</Link>
-          </div>
+      {/* Navigation & Credits */}
+      <div className="fixed top-0 w-full z-50">
+        <div className="w-full bg-slate-900 text-white/90 py-2 text-center text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase border-b border-white/10">
+          made by Hardik Mangesh dandgaval & HAJBE AKASH SHIVANAND
         </div>
-      </nav>
+        <nav className="w-full glass bg-white/80 backdrop-blur-xl border-b border-slate-100">
+          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
+                <Activity className="text-white w-6 h-6" />
+              </div>
+              <span className="text-xl font-bold tracking-tight text-slate-900">MediTrack</span>
+            </div>
+
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#features" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Features</a>
+              <Link href="/login" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Sign in</Link>
+              <Link href="/register" className="btn-primary py-2.5 px-5 text-sm">Get Started</Link>
+            </div>
+          </div>
+        </nav>
+      </div>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-24 overflow-hidden">
+      <section className="pt-48 pb-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <motion.div
@@ -66,7 +71,7 @@ export default function Home() {
                 <Link href="/register" className="btn-primary flex items-center gap-2 w-full sm:w-auto justify-center">
                   Start searching <ChevronRight className="w-4 h-4" />
                 </Link>
-               
+
               </div>
             </motion.div>
 
@@ -107,7 +112,7 @@ export default function Home() {
               { icon: MapPin, title: "Nearby Search", desc: "Precision location tracking within 500m" },
               { icon: Shield, title: "Verified Stock", desc: "Real-time verification from pharmacists" },
               { icon: Zap, title: "Instant Access", desc: "Get directions and call with one tap" },
-              { icon: Search, title: "Smart Discovery", desc: "AI-powered medicine alternatives" }
+              { icon: Search, title: "Smart Discovery", desc: "Medicine alternatives" }
             ].map((feature, i) => (
               <motion.div key={i} variants={item} className="p-8 rounded-3xl bg-slate-50/50 hover:bg-white transition-colors border border-transparent hover:border-slate-100">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 mb-6">
