@@ -26,8 +26,26 @@
 2. **Pharmacists**: Manage their medicine inventory and store profile.
 3. **Admins**: Approve new pharmacists and monitor platform health.
 
+**Q: What is the main objective of MediTrack?**  
+**A:** To provide a real-time platform where patients can find the nearest pharmacy that has their required medicine in stock, saving time and potentially lives.
+
+**Q: Can a user buy medicines directly from this app?**  
+**A:** No, this is a discovery platform. It informs the user where the medicine is available so they can visit the store or contact the pharmacist.
+
+**Q: What is a "Full-Stack" application?**  
+**A:** It refers to an application that handles both the **Frontend** (what the user sees, like buttons and maps) and the **Backend** (the server, database, and logic that powers the site).
+
+**Q: What is "Responsive Design"?**  
+**A:** It means the website automatically adjusts its layout to look good on all devices, whether it's a mobile phone, a tablet, or a desktop computer.
+
+**Q: Why do we use Icons in the project?**  
+**A:** We use **Lucide React** icons to make the user interface more intuitive—for example, a "Map Pin" icon for locations and a "Pill" icon for medicines.
+
 **Q: How does the "Nearby Search" work?**  
-**A:** We use the browser's Geolocation API to get the user's coordinates and then calculate the distance to various pharmacies stored in our database using the Haversine formula.
+**A:** We use the browser's Geolocation API to get the user's coordinates and then calculate the distance to various pharmacies stored in our database using the **Haversine formula**.
+
+**Q: How do you handle cases where a user denies location access?**  
+**A:** The app provides a fallback where it asks the user to manually enter their location or defaults to a city center, ensuring the app remains functional.
 
 ---
 
@@ -35,26 +53,41 @@
 **Q: Why did you choose Next.js instead of plain React?**  
 **A:** Next.js provides Full-Stack capabilities (API routes), optimized performance (Server Components), and better SEO out of the box. It simplifies building a production-ready app.
 
+**Q: What is the difference between Server and Client Components in your project?**  
+**A:** **Server Components** (default in App Router) handle data fetching directly on the server, reducing the JavaScript sent to the client. **Client Components** (marked with `'use client'`) are used for interactive elements like buttons, maps (Leaflet), and animations (Framer Motion).
+
 **Q: How is the authentication handled?**  
-**A:** We use **NextAuth.js**. It manages secure session handling, password hashing (using bcrypt), and provides a flexible way to handle different user roles (Admin vs. Pharmacist).
+**A:** We use **NextAuth.js**. It manages secure session handling, password hashing (using **bcrypt**), and provides a flexible way to handle different user roles (Admin vs. Pharmacist) using a JWT-based strategy.
 
 **Q: What database are you using and why?**  
 **A:** **MongoDB**. As a NoSQL database, it's great for healthcare data where medicine details might vary. It’s also very easy to scale and works perfectly with JSON-like documents in Node.js.
+
+**Q: How does Mongoose help in this project?**  
+**A:** Mongoose acts as an **Object Data Modeling (ODM)** library. It provides a schema-based solution to model our application data, includes built-in type casting, validation, and query building.
 
 **Q: How are you showing the map?**  
 **A:** We use **Leaflet.js**, an open-source mapping library. We also used **CartoDB Dark Matter** tiles to give the map a premium dark-mode aesthetic.
 
 ---
 
-### 3. Feature-Specific Questions
+### 3. Feature-Specific & Security Questions
 **Q: How does the pharmacist update inventory?**  
 **A:** Once logged in, pharmacists have a dedicated dashboard where they can add, edit, or delete medicines. These changes are reflected instantly in the user's search results.
 
 **Q: What is the significance of the "Admin Approval" feature?**  
 **A:** To prevent fake listings, only an Admin can approve a Pharmacist's account. This ensures that the data on the platform is verified and trustworthy.
 
+**Q: How do you secure private routes?**  
+**A:** We use **Next.js Middleware** and NextAuth session checks. If a user tries to access `/admin` or `/dashboard` without the correct role or active session, they are automatically redirected to the login page.
+
+**Q: What is "Glassmorphism" and how is it used here?**  
+**A:** It is a design trend characterized by translucent, frosted-glass-like elements. We implemented it using Tailwind's `backdrop-blur` and semi-transparent background colors to create a premium UI.
+
+**Q: How do you prevent SQL Injection or NoSQL Injection?**  
+**A:** By using **Mongoose**, all inputs are sanitized. We don't use raw queries; instead, we use Mongoose's built-in methods which significantly reduce the risk of injection attacks.
+
 **Q: What animations are used to make the UI look premium?**  
-**A:** We used **Framer Motion** for smooth entrances, hover effects on cards, and **glassmorphism** (translucent backgrounds) in the CSS to follow modern design trends.
+**A:** We used **Framer Motion** for smooth entrances, hover effects on cards, and staggered animations for lists to make the application feel more "alive."
 
 ---
 

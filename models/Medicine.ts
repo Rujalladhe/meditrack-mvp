@@ -3,6 +3,8 @@ import mongoose, { Document, Schema, Model } from 'mongoose';
 export interface IMedicine extends Document {
     name: string;
     brandName: string;
+    genericName: string;
+    category: string;
     price: number;
     quantity: number;
     expiryDate: Date;
@@ -10,6 +12,16 @@ export interface IMedicine extends Document {
     ageGroup: string;
     discount: number;
     pharmacyId: mongoose.Types.ObjectId;
+    
+    // Medical Information
+    symptoms: string[];
+    dosage: string;
+    sideEffects: string[];
+    precautions: string[];
+    whenToUse: string;
+    whenNotToUse: string;
+    timingInstructions: string;
+    
     createdAt: Date;
 }
 
@@ -21,6 +33,14 @@ const MedicineSchema: Schema = new Schema({
     brandName: {
         type: String,
         required: [true, 'Please provide brand name'],
+    },
+    genericName: {
+        type: String,
+        default: '',
+    },
+    category: {
+        type: String,
+        default: 'General',
     },
     price: {
         type: Number,
@@ -56,6 +76,37 @@ const MedicineSchema: Schema = new Schema({
         ref: 'Pharmacy',
         required: true,
     },
+    
+    // Medical Information
+    symptoms: {
+        type: [String],
+        default: [],
+    },
+    dosage: {
+        type: String,
+        default: '',
+    },
+    sideEffects: {
+        type: [String],
+        default: [],
+    },
+    precautions: {
+        type: [String],
+        default: [],
+    },
+    whenToUse: {
+        type: String,
+        default: '',
+    },
+    whenNotToUse: {
+        type: String,
+        default: '',
+    },
+    timingInstructions: {
+        type: String,
+        default: '',
+    },
+    
     createdAt: {
         type: Date,
         default: Date.now,

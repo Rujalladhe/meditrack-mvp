@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Search, MapPin, Shield, Zap, ChevronRight, Activity, Pill, User, Smartphone } from 'lucide-react';
+import { Search, MapPin, Shield, Zap, ChevronRight, Activity, Pill, User, Smartphone, Bot } from 'lucide-react';
 
 const container = {
   hidden: { opacity: 0 },
@@ -38,6 +38,10 @@ export default function Home() {
 
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Features</a>
+              <Link href="/symptom-checker" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1">
+                <Bot className="w-4 h-4" />
+                AI Symptom Checker
+              </Link>
               <Link href="/login" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Sign in</Link>
               <Link href="/register" className="btn-primary py-2.5 px-5 text-sm">Get Started</Link>
             </div>
@@ -71,7 +75,10 @@ export default function Home() {
                 <Link href="/register" className="btn-primary flex items-center gap-2 w-full sm:w-auto justify-center">
                   Start searching <ChevronRight className="w-4 h-4" />
                 </Link>
-
+                <Link href="/symptom-checker" className="btn-secondary flex items-center gap-2 w-full sm:w-auto justify-center">
+                  <Bot className="w-5 h-5" />
+                  Try AI Symptom Checker
+                </Link>
               </div>
             </motion.div>
 
@@ -109,10 +116,10 @@ export default function Home() {
             className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
+              { icon: Bot, title: "AI Symptom Checker", desc: "Describe symptoms, get medicine recommendations" },
               { icon: MapPin, title: "Nearby Search", desc: "Precision location tracking within 500m" },
               { icon: Shield, title: "Verified Stock", desc: "Real-time verification from pharmacists" },
-              { icon: Zap, title: "Instant Access", desc: "Get directions and call with one tap" },
-              { icon: Search, title: "Smart Discovery", desc: "Medicine alternatives" }
+              { icon: Zap, title: "Instant Access", desc: "Get directions and call with one tap" }
             ].map((feature, i) => (
               <motion.div key={i} variants={item} className="p-8 rounded-3xl bg-slate-50/50 hover:bg-white transition-colors border border-transparent hover:border-slate-100">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 mb-6">
