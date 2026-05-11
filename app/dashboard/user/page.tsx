@@ -52,7 +52,7 @@ export default function UserDashboard() {
 
     useEffect(() => {
         if (status === 'unauthenticated') router.push('/login');
-        else if (session?.user?.role !== 'user') router.push('/dashboard');
+        else if (status === 'authenticated' && session?.user?.role && session.user.role !== 'user') router.push('/dashboard');
     }, [session, status, router]);
 
     useEffect(() => {
