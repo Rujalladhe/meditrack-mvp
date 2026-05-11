@@ -17,6 +17,81 @@ const PharmacyMap = dynamic(() => import('@/components/PharmacyMap'), {
     loading: () => <div className="w-full h-full bg-slate-50 animate-pulse rounded-3xl" />
 });
 
+const FAKE_DATA: SearchResult[] = [
+    {
+        medicineId: 'fake-1', medicineName: 'Paracetamol 500mg', brandName: 'Crocin', price: 35, quantity: 120, discount: 10,
+        expiryDate: '2027-08-15', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-1', name: 'Apollo Pharmacy', address: 'Andheri West, Mumbai', latitude: 19.1364, longitude: 72.8296, contactNumber: '+91 98201 12345' },
+        distance: 1.2, finalPrice: 31.5,
+    },
+    {
+        medicineId: 'fake-2', medicineName: 'Azithromycin 250mg', brandName: 'Zithromax', price: 180, quantity: 30, discount: 15,
+        expiryDate: '2027-05-20', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-2', name: 'MedPlus', address: 'Bandra East, Mumbai', latitude: 19.0596, longitude: 72.8495, contactNumber: '+91 98201 22345' },
+        distance: 2.5, finalPrice: 153,
+    },
+    {
+        medicineId: 'fake-3', medicineName: 'Cetirizine 10mg', brandName: 'Zyrtec', price: 45, quantity: 200, discount: 5,
+        expiryDate: '2028-01-10', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-3', name: 'Wellness Forever', address: 'Powai, Mumbai', latitude: 19.1176, longitude: 72.9060, contactNumber: '+91 98201 33345' },
+        distance: 3.1, finalPrice: 42.75,
+    },
+    {
+        medicineId: 'fake-4', medicineName: 'Amoxicillin 500mg', brandName: 'Mox', price: 95, quantity: 60, discount: 20,
+        expiryDate: '2027-11-30', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-4', name: 'Netmeds Store', address: 'Dadar West, Mumbai', latitude: 19.0178, longitude: 72.8478, contactNumber: '+91 98201 44345' },
+        distance: 4.0, finalPrice: 76,
+    },
+    {
+        medicineId: 'fake-5', medicineName: 'Pantoprazole 40mg', brandName: 'Pan-D', price: 120, quantity: 90, discount: 12,
+        expiryDate: '2027-09-25', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-1', name: 'Apollo Pharmacy', address: 'Andheri West, Mumbai', latitude: 19.1364, longitude: 72.8296, contactNumber: '+91 98201 12345' },
+        distance: 1.2, finalPrice: 105.6,
+    },
+    {
+        medicineId: 'fake-6', medicineName: 'Ibuprofen 400mg', brandName: 'Brufen', price: 28, quantity: 150, discount: 8,
+        expiryDate: '2028-03-18', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-5', name: 'HealthKart Pharmacy', address: 'Juhu, Mumbai', latitude: 19.1075, longitude: 72.8263, contactNumber: '+91 98201 55345' },
+        distance: 1.8, finalPrice: 25.76,
+    },
+    {
+        medicineId: 'fake-7', medicineName: 'Metformin 500mg', brandName: 'Glycomet', price: 55, quantity: 300, discount: 18,
+        expiryDate: '2027-12-01', gender: 'unisex', ageGroup: 'Senior',
+        pharmacy: { id: 'ph-6', name: 'PharmEasy Store', address: 'Malad West, Mumbai', latitude: 19.1874, longitude: 72.8484, contactNumber: '+91 98201 66345' },
+        distance: 5.3, finalPrice: 45.1,
+    },
+    {
+        medicineId: 'fake-8', medicineName: 'Vitamin D3 60K IU', brandName: 'D-Rise', price: 150, quantity: 45, discount: 25,
+        expiryDate: '2028-06-10', gender: 'unisex', ageGroup: 'All Ages',
+        pharmacy: { id: 'ph-2', name: 'MedPlus', address: 'Bandra East, Mumbai', latitude: 19.0596, longitude: 72.8495, contactNumber: '+91 98201 22345' },
+        distance: 2.5, finalPrice: 112.5,
+    },
+    {
+        medicineId: 'fake-9', medicineName: 'Dolo 650mg', brandName: 'Dolo', price: 30, quantity: 500, discount: 0,
+        expiryDate: '2027-07-22', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-3', name: 'Wellness Forever', address: 'Powai, Mumbai', latitude: 19.1176, longitude: 72.9060, contactNumber: '+91 98201 33345' },
+        distance: 3.1, finalPrice: 30,
+    },
+    {
+        medicineId: 'fake-10', medicineName: 'ORS Sachets', brandName: 'Electral', price: 22, quantity: 1000, discount: 5,
+        expiryDate: '2028-04-15', gender: 'unisex', ageGroup: 'All Ages',
+        pharmacy: { id: 'ph-5', name: 'HealthKart Pharmacy', address: 'Juhu, Mumbai', latitude: 19.1075, longitude: 72.8263, contactNumber: '+91 98201 55345' },
+        distance: 1.8, finalPrice: 20.9,
+    },
+    {
+        medicineId: 'fake-11', medicineName: 'Montelukast 10mg', brandName: 'Montair', price: 210, quantity: 40, discount: 10,
+        expiryDate: '2027-10-05', gender: 'unisex', ageGroup: 'Adult',
+        pharmacy: { id: 'ph-4', name: 'Netmeds Store', address: 'Dadar West, Mumbai', latitude: 19.0178, longitude: 72.8478, contactNumber: '+91 98201 44345' },
+        distance: 4.0, finalPrice: 189,
+    },
+    {
+        medicineId: 'fake-12', medicineName: 'Calpol Syrup', brandName: 'Calpol', price: 65, quantity: 80, discount: 12,
+        expiryDate: '2027-06-28', gender: 'unisex', ageGroup: 'Child',
+        pharmacy: { id: 'ph-6', name: 'PharmEasy Store', address: 'Malad West, Mumbai', latitude: 19.1874, longitude: 72.8484, contactNumber: '+91 98201 66345' },
+        distance: 5.3, finalPrice: 57.2,
+    },
+];
+
 interface SearchResult {
     medicineId: string;
     medicineName: string;
@@ -83,10 +158,27 @@ export default function UserDashboard() {
             });
             if (response.ok) {
                 const data = await response.json();
-                setResults(data.results);
+                // Use fake data as fallback when the database is empty
+                if (data.results && data.results.length > 0) {
+                    setResults(data.results);
+                } else {
+                    let fallback = [...FAKE_DATA];
+                    if (term && term.trim()) {
+                        fallback = fallback.filter(r => r.medicineName.toLowerCase().includes(term.toLowerCase()) || r.brandName.toLowerCase().includes(term.toLowerCase()));
+                    }
+                    if (sortBy === 'price') fallback.sort((a, b) => a.finalPrice - b.finalPrice);
+                    else if (sortBy === 'discount') fallback.sort((a, b) => b.discount - a.discount);
+                    else fallback.sort((a, b) => a.distance - b.distance);
+                    setResults(fallback);
+                }
+            } else {
+                // API error – still show fake data
+                setResults([...FAKE_DATA].sort((a, b) => a.distance - b.distance));
             }
         } catch (error) {
             console.error('Search error:', error);
+            // Network error – show fake data so UI is never empty
+            setResults([...FAKE_DATA].sort((a, b) => a.distance - b.distance));
         } finally {
             setLoading(false);
         }
