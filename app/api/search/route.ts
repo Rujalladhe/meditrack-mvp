@@ -8,6 +8,12 @@ import { calculateDistance } from '@/lib/distance';
 
 export async function POST(request: NextRequest) {
     try {
+        // Guard: fail fast with a clear message if env vars missing
+        if (!process.env.MONGODB_URI) {
+            console.error('MONGODB_URI is not set in environment variables');
+            return NextResponse.json({ message: 'Server configuration error: MONGODB_URI missing' }, { status: 500 });
+        }
+
         const session = await getServerSession(authOptions);
 
         if (!session) {
@@ -33,41 +39,43 @@ export async function POST(request: NextRequest) {
 
         // Find medicines and populate pharmacy
         const medicines = await Medicine.find(query)
-            .limit(20) // Limit results for nearby discovery
+            .limit(50)
             .populate('pharmacyId');
 
-        // Calculate distance for each medicine
-        const results = medicines.map((medicine: any) => {
-            const pharmacy = medicine.pharmacyId;
-            const distance = calculateDistance(
-                userLatitude,
-                userLongitude,
-                pharmacy.latitude,
-                pharmacy.longitude
-            );
+        // Filter out any with missing/null pharmacy refs, then map
+        const results = medicines
+            .filter((medicine: any) => medicine.pharmacyId && medicine.pharmacyId.latitude != null)
+            .map((medicine: any) => {
+                const pharmacy = medicine.pharmacyId;
+                const distance = calculateDistance(
+                    userLatitude,
+                    userLongitude,
+                    pharmacy.latitude,
+                    pharmacy.longitude
+                );
 
-            return {
-                medicineId: medicine._id,
-                medicineName: medicine.name,
-                brandName: medicine.brandName,
-                price: medicine.price,
-                quantity: medicine.quantity,
-                discount: medicine.discount,
-                expiryDate: medicine.expiryDate,
-                gender: medicine.gender,
-                ageGroup: medicine.ageGroup,
-                pharmacy: {
-                    id: pharmacy._id,
-                    name: pharmacy.name,
-                    address: pharmacy.address,
-                    latitude: pharmacy.latitude,
-                    longitude: pharmacy.longitude,
-                    contactNumber: pharmacy.contactNumber,
-                },
-                distance,
-                finalPrice: medicine.price - (medicine.price * medicine.discount) / 100,
-            };
-        });
+                return {
+                    medicineId: medicine._id,
+                    medicineName: medicine.name,
+                    brandName: medicine.brandName,
+                    price: medicine.price,
+                    quantity: medicine.quantity,
+                    discount: medicine.discount,
+                    expiryDate: medicine.expiryDate,
+                    gender: medicine.gender,
+                    ageGroup: medicine.ageGroup,
+                    pharmacy: {
+                        id: pharmacy._id,
+                        name: pharmacy.name,
+                        address: pharmacy.address,
+                        latitude: pharmacy.latitude,
+                        longitude: pharmacy.longitude,
+                        contactNumber: pharmacy.contactNumber,
+                    },
+                    distance,
+                    finalPrice: medicine.price - (medicine.price * medicine.discount) / 100,
+                };
+            });
 
         // Sort results
         let sortedResults = [...results];
@@ -92,10 +100,10 @@ export async function POST(request: NextRequest) {
             },
             { status: 200 }
         );
-    } catch (error) {
-        console.error('Error searching medicines:', error);
+    } catch (error: any) {
+        console.error('Search API error:', error?.message || error);
         return NextResponse.json(
-            { message: 'Error searching medicines' },
+            { message: 'Error searching medicines', detail: error?.message },
             { status: 500 }
         );
     }
